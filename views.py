@@ -1408,7 +1408,7 @@ class CompanyCreateView(View):
                 unit_code = 'A' + '%02d' % i
                 unit_name = '第' + str(i) + '組'
                 member_sumber = 'G' + '%02d' % i
-                mail = 'std' + '%02d' % i + '@iecslab.fcu'
+                mail = 'g' + '%02d' % i + '@iecslab.fcu'
                 srcHash1 = project_code1[0:2] + unit_code + member_sumber
                 m2 = hashlib.md5()
                 m2.update(srcHash1.encode(encoding='utf-8'))
