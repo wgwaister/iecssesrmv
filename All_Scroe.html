@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load Template_Filter %}
+{% load guardian_tags %}
+
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="{% url 'project' %}">{{ Project.CompanyCode.CompanyName }}</a></li>
+        <li class="breadcrumb-item"><a href="/project/{{ Project.ProjectCode }}">
+            {{ Project.ProjectName }}</a></li>
+        <li class="breadcrumb-item active">信件回報</li>
+    </ol>
+{% endblock %}
+
+{% block style %}
+    button {
+    border-width:0px;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <section class="row mx-auto">
+            <h1 class="mb-4">信件回報</h1>
+            <div class="row col-12 mx-auto justify-content-between">
+                {% block project %}
+                    {% include 'navbar.html' %}
+                {% endblock %}
+            </div>
+            <div class="row mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        {% get_obj_perms request.user for Project as 'project_perms' %}
+                        <br>
+                        {% if second_phase %}
+                            <div class="row mx-auto table-responsive">
+                                <table class="table table-striped col-auto" id="table1" style="text-align:center;overflow-x: auto;
+                                                                            white-space: nowrap;">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">組別</th>
+                                        <th scope="col">信件一得分</th>
+                                        <th scope="col">信件二得分</th>
+                                        <th scope="col">信件三得分</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for score in all_group_score %}
+                                        <tr>
+                                            <td>{{ score.group_name }}</td>
+                                            {% if score.mail1 == None %}
+                                                <td>-</td>
+                                            {% else %}
+                                                <td>{{ score.mail1 }}</td>
+                                            {% endif %}
+                                            {% if score.mail2 == None %}
+                                                <td>-</td>
+                                            {% else %}
+                                                <td>{{ score.mail2 }}</td>
+                                            {% endif %}
+                                            {% if score.mail3 == None %}
+                                                <td>-</td>
+                                            {% else %}
+                                                <td>{{ score.mail3 }}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="row mx-auto">
+                                <h3>非第二階段演練，故無信件回報功能</h3>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -22,10 +22,10 @@ from .forms import *
 from .models import *
 from .resources import *
 from tablib import Dataset
-# import plotly.express as px
-# import plotly.graph_objs as go
-# import plotly.offline as po
-# import pandas as pd
+import plotly.express as px
+import plotly.graph_objs as go
+import plotly.offline as po
+import pandas as pd
 from itsdangerous import URLSafeTimedSerializer as utsr
 from django.contrib.auth import password_validation
 from django.core.files.storage import *
@@ -1913,9 +1913,13 @@ class ProjectAllScoreView(View):
         project = Project.objects.get(pk=pk)
         company = project.CompanyCode
         all_group_score = Score.objects.filter(company=company).order_by('group_name')
+        second_phase = False
+        if project.ProjectName == '第二階段演練':
+            second_phase = True
         context = {
-            'all_group_score': all_group_score
-        }
+            'all_group_score': all_group_score,
+            'Project': project,
+            'second_phase': second_phase}
         return render(request, self.template_name, context)
 
 

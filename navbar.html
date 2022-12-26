@@ -1,0 +1,68 @@
+{% load guardian_tags %}
+{% comment %}
+<div class="row col-auto">
+    <a href="{% url 'Project_Information' pk=Project.pk %}" class='btn btn-primary'>
+        <i class="bi bi-grid-fill"></i>
+        <span>專案資訊</span>
+    </a>
+</div>
+<div class="row col-auto">
+    <a href="{% url 'TML' pk=Project.pk %}" class='btn btn-primary'>
+        <i class="bi bi-grid-fill"></i>
+        <span>受測清單</span>
+    </a>
+</div>
+<div class="row col-auto">
+    <a href="{% url 'PM' pk=Project.pk %}" class='btn btn-primary'>
+        <i class="bi bi-grid-fill"></i>
+        <span>信件資訊</span>
+    </a>
+</div>
+<div class="row col-auto">
+    <a href="{% url 'PR' pk=Project.pk %}" class='btn btn-primary'>
+        <i class="bi bi-grid-fill"></i>
+        <span>統計結果</span>
+    </a>
+</div>
+{% get_obj_perms request.user for Project as 'project_perms' %}
+{% if 'exe_project' in project_perms %}
+    <div class="row col-auto">
+        <a href="#" class='btn btn-primary'>
+            <i class="bi bi-grid-fill"></i>
+            <span>信件範本</span>
+        </a>
+    </div>
+    <div class="row col-auto">
+        <a href="#" class='btn btn-primary'>
+            <i class="bi bi-grid-fill"></i>
+            <span>寄送信件</span>
+        </a>
+    </div>
+{% endif %}
+{% endcomment %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'Project_Information' pk=Project.pk %}">演練資訊</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'TML' pk=Project.pk %}">受測清單</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'PM' pk=Project.pk %}">信件資訊</a>
+    </li>
+    {% get_obj_perms request.user for Project as 'project_perms' %}
+    {% if 'exe_project' in project_perms %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'Mail_System' pk=Project.pk %}">寄送信件</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'mail_record' pk=Project.pk %}">寄送紀錄</a>
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'PR' pk=Project.pk %}">統計結果</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'PR_all_score' pk=Project.pk %}">信件回報結果</a>
+    </li>
+</ul>
